@@ -13,7 +13,8 @@ import {
   FiHelpCircle, 
   FiChevronLeft, 
   FiChevronRight,
-  FiGrid
+  FiGrid,
+  FiLayers
 } from 'react-icons/fi';
 
 interface NavItem {
@@ -50,7 +51,7 @@ export function Sidebar() {
     { label: 'Products', icon: <FiShoppingBag size={20} />, href: '/products' },
     { label: 'Customers', icon: <FiUsers size={20} />, href: '/customers' },
     { label: 'Widgets', icon: <FiGrid size={20} />, href: '/widgets' },
-    { label: 'Components', icon: <FiGrid size={20} />, href: '/components-showcase' },
+    { label: 'Components', icon: <FiLayers size={20} />, href: '/components' },
   ];
 
   const bottomNavItems: NavItem[] = [
