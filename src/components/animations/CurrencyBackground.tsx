@@ -3,26 +3,26 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 
-// Currency symbols with a cohesive color palette
+// Currency symbols with medium-brightness colors (between pastel and vivid)
 const CURRENCY_SYMBOLS = [
-  { symbol: '$', name: 'dollar', color: 'from-emerald-400 to-emerald-600' },
-  { symbol: '€', name: 'euro', color: 'from-blue-400 to-blue-600' },
-  { symbol: '¥', name: 'yen', color: 'from-purple-400 to-purple-600' },
-  { symbol: '£', name: 'pound', color: 'from-indigo-400 to-indigo-600' },
-  { symbol: '₹', name: 'rupee', color: 'from-amber-400 to-amber-600' },
-  { symbol: '₩', name: 'won', color: 'from-cyan-400 to-cyan-600' },
-  { symbol: '฿', name: 'baht', color: 'from-pink-400 to-pink-600' },
-  { symbol: '₽', name: 'ruble', color: 'from-sky-400 to-sky-600' },
-  { symbol: '₺', name: 'lira', color: 'from-orange-400 to-orange-600' },
-  { symbol: 'د.إ', name: 'dirham', color: 'from-rose-400 to-rose-600' },
-  { symbol: '₿', name: 'bitcoin', color: 'from-yellow-400 to-yellow-600' },
+  { symbol: '$', name: 'dollar', color: 'from-emerald-300 to-emerald-500' },
+  { symbol: '€', name: 'euro', color: 'from-blue-300 to-blue-500' },
+  { symbol: '¥', name: 'yen', color: 'from-purple-300 to-purple-500' },
+  { symbol: '£', name: 'pound', color: 'from-indigo-300 to-indigo-500' },
+  { symbol: '₹', name: 'rupee', color: 'from-amber-300 to-amber-500' },
+  { symbol: '₩', name: 'won', color: 'from-cyan-300 to-cyan-500' },
+  { symbol: '฿', name: 'baht', color: 'from-pink-300 to-pink-500' },
+  { symbol: '₽', name: 'ruble', color: 'from-sky-300 to-sky-500' },
+  { symbol: '₺', name: 'lira', color: 'from-orange-300 to-orange-500' },
+  { symbol: 'د.إ', name: 'dirham', color: 'from-rose-300 to-rose-500' },
+  { symbol: '₿', name: 'bitcoin', color: 'from-yellow-300 to-yellow-500' },
 ];
 
-// Size categories for more uniform appearance
+// Size categories for more uniform appearance (slightly smaller)
 const SIZE_CATEGORIES = [
-  { size: 36, weight: 'font-semibold' },
-  { size: 44, weight: 'font-bold' },
-  { size: 52, weight: 'font-bold' },
+  { size: 32, weight: 'font-medium' },
+  { size: 40, weight: 'font-semibold' },
+  { size: 46, weight: 'font-semibold' },
 ];
 
 interface CurrencyParticle {
@@ -53,8 +53,8 @@ export function CurrencyBackground() {
       height: window.innerHeight 
     });
 
-    // Distribute particles evenly across the screen for better coverage
-    const initialParticles: CurrencyParticle[] = Array.from({ length: 30 }, (_, i) => {
+    // Distribute particles evenly across the screen with fewer particles
+    const initialParticles: CurrencyParticle[] = Array.from({ length: 25 }, (_, i) => {
       const randomCurrency = CURRENCY_SYMBOLS[Math.floor(Math.random() * CURRENCY_SYMBOLS.length)];
       const sizeCategory = SIZE_CATEGORIES[Math.floor(Math.random() * SIZE_CATEGORIES.length)];
       
@@ -82,7 +82,7 @@ export function CurrencyBackground() {
         size: sizeCategory.size,
         weight: sizeCategory.weight,
         rotation: Math.floor(Math.random() * 4) * 90, // Only 0, 90, 180, 270 degrees
-        speed: 0.3 + Math.random() * 0.4, // More consistent speed
+        speed: 0.2 + Math.random() * 0.3, // Slower speed for less distracting movement
         direction: Math.random() * 360,
       };
     });
@@ -176,32 +176,32 @@ export function CurrencyBackground() {
             y: particle.y,
             fontSize: `${particle.size}px`,
             rotate: particle.rotation,
-            opacity: 0.85,
+            opacity: 0.65, // Moderate opacity - visible but not distracting
           }}
           initial={{ scale: 0 }}
           animate={{ 
             scale: 1,
-            opacity: [0.6, 0.85, 0.6],
+            opacity: [0.5, 0.65, 0.5], // Moderate opacity range
           }}
           transition={{
             opacity: {
-              duration: 5,
+              duration: 6,
               repeat: Infinity,
               repeatType: 'reverse'
             },
-            scale: { duration: 0.8 }
+            scale: { duration: 1 }
           }}
         >
           <div className={`relative flex items-center justify-center ${particle.weight}`} 
                style={{ width: `${particle.size * 1.5}px`, height: `${particle.size * 1.5}px` }}>
-            {/* Colorful gradient background */}
-            <div className={`absolute inset-0 rounded-full bg-gradient-to-br ${particle.color} opacity-90 shadow-lg`}></div>
+            {/* Gradient background with moderate opacity */}
+            <div className={`absolute inset-0 rounded-full bg-gradient-to-br ${particle.color} opacity-75 shadow`}></div>
             
-            {/* White inner glow */}
-            <div className="absolute inset-1 rounded-full bg-white dark:bg-gray-900 opacity-30"></div>
+            {/* Inner glow */}
+            <div className="absolute inset-1 rounded-full bg-white dark:bg-gray-900 opacity-25"></div>
             
-            {/* Currency symbol */}
-            <span className="relative z-10 text-white drop-shadow-md">{particle.symbol}</span>
+            {/* Currency symbol with improved visibility */}
+            <span className="relative z-10 text-white drop-shadow-sm">{particle.symbol}</span>
           </div>
         </motion.div>
       ))}
