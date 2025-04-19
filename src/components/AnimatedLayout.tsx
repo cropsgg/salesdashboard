@@ -1,5 +1,8 @@
+'use client';
+
 import React, { ReactNode } from 'react';
 import { motion } from 'framer-motion';
+import { CurrencyBackground } from './animations/CurrencyBackground';
 
 type AnimatedLayoutProps = {
   children: ReactNode;
@@ -29,15 +32,20 @@ const pageVariants = {
 
 const AnimatedLayout = ({ children }: AnimatedLayoutProps) => {
   return (
-    <motion.div
-      initial="initial"
-      animate="animate"
-      exit="exit"
-      variants={pageVariants}
-      className="w-full h-full"
-    >
-      {children}
-    </motion.div>
+    <>
+      {/* Only add this to app-wide layouts that are not DashboardLayout */}
+      <CurrencyBackground />
+      
+      <motion.div
+        initial="initial"
+        animate="animate"
+        exit="exit"
+        variants={pageVariants}
+        className="w-full h-full"
+      >
+        {children}
+      </motion.div>
+    </>
   );
 };
 
