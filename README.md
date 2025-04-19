@@ -1,24 +1,55 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Sales Dashboard - Premium UI/UX Experience
+
+A modern, feature-rich sales dashboard built with Next.js and Tailwind CSS. This dashboard showcases cutting-edge UI/UX techniques for a seamless user experience.
+
+## Features
+
+- **Interactive Dashboard**: Real-time data visualization with animated charts and metrics
+- **Responsive Design**: Works seamlessly on all device sizes
+- **Dark Mode Support**: Toggle between light and dark themes
+- **Keyboard Shortcuts**: Enhance productivity with keyboard shortcuts
+- **Rich Animations**: Smooth transitions and micro-interactions using Framer Motion
+- **Interactive Charts**: Customizable charts with hover tooltips and drill-down functionality
+- **Advanced Data Filtering**: Filter data by date range, categories, and search terms
+- **Accessible UI**: WCAG compliant design with proper ARIA attributes
+- **PWA Support**: Progressive Web App features for offline capabilities
 
 ## Getting Started
 
-First, run the development server:
+1. Clone the repository
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Run the development server:
+   ```bash
+   npm run dev
+   ```
+4. Open [http://localhost:3000](http://localhost:3000) in your browser
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Available Keyboard Shortcuts
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- **/** - Focus search input
+- **N** - Add new widget
+- **T** - Toggle theme (light/dark)
+- **R** - Refresh dashboard data
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Technologies Used
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **Next.js**: React framework for production
+- **Tailwind CSS**: Utility-first CSS framework
+- **Framer Motion**: Animation library
+- **Recharts**: Composable charting library
+- **Headless UI**: Unstyled, accessible UI components
+
+## Dashboard Components
+
+- **KPI Cards**: Show key performance indicators with trend indicators
+- **Revenue Chart**: Visualize revenue trends with targets and comparisons
+- **Channel Distribution**: Donut chart showing revenue distribution by channel
+- **Products Table**: Interactive table with sorting and filtering capabilities
+
+Developed as part of a frontend hackathon to showcase modern UI/UX techniques and best practices.
 
 ## Learn More
 
