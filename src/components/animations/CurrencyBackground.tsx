@@ -3,19 +3,19 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 
-// Currency symbols with minimalist color scheme
+// Currency symbols with medium-brightness colors (between pastel and vivid)
 const CURRENCY_SYMBOLS = [
-  { symbol: '$', name: 'dollar' },
-  { symbol: '€', name: 'euro' },
-  { symbol: '¥', name: 'yen' },
-  { symbol: '£', name: 'pound' },
-  { symbol: '₹', name: 'rupee' },
-  { symbol: '₩', name: 'won' },
-  { symbol: '฿', name: 'baht' },
-  { symbol: '₽', name: 'ruble' },
-  { symbol: '₺', name: 'lira' },
-  { symbol: 'د.إ', name: 'dirham' },
-  { symbol: '₿', name: 'bitcoin' },
+  { symbol: '$', name: 'dollar', color: 'from-emerald-300 to-emerald-500' },
+  { symbol: '€', name: 'euro', color: 'from-blue-300 to-blue-500' },
+  { symbol: '¥', name: 'yen', color: 'from-purple-300 to-purple-500' },
+  { symbol: '£', name: 'pound', color: 'from-indigo-300 to-indigo-500' },
+  { symbol: '₹', name: 'rupee', color: 'from-amber-300 to-amber-500' },
+  { symbol: '₩', name: 'won', color: 'from-cyan-300 to-cyan-500' },
+  { symbol: '฿', name: 'baht', color: 'from-pink-300 to-pink-500' },
+  { symbol: '₽', name: 'ruble', color: 'from-sky-300 to-sky-500' },
+  { symbol: '₺', name: 'lira', color: 'from-orange-300 to-orange-500' },
+  { symbol: 'د.إ', name: 'dirham', color: 'from-rose-300 to-rose-500' },
+  { symbol: '₿', name: 'bitcoin', color: 'from-yellow-300 to-yellow-500' },
 ];
 
 // Size categories for more uniform appearance (slightly smaller)
@@ -31,6 +31,7 @@ interface CurrencyParticle {
   y: number;
   symbol: string;
   name: string;
+  color: string;
   size: number;
   weight: string;
   rotation: number;
@@ -77,6 +78,7 @@ export function CurrencyBackground() {
         y: randomY,
         symbol: randomCurrency.symbol,
         name: randomCurrency.name,
+        color: randomCurrency.color,
         size: sizeCategory.size,
         weight: sizeCategory.weight,
         rotation: Math.floor(Math.random() * 4) * 90, // Only 0, 90, 180, 270 degrees
@@ -174,12 +176,12 @@ export function CurrencyBackground() {
             y: particle.y,
             fontSize: `${particle.size}px`,
             rotate: particle.rotation,
-            opacity: 0.6, // Slightly lower opacity for minimalist design
+            opacity: 0.65, // Moderate opacity - visible but not distracting
           }}
           initial={{ scale: 0 }}
           animate={{ 
             scale: 1,
-            opacity: [0.4, 0.6, 0.4], // Subtle opacity range
+            opacity: [0.5, 0.65, 0.5], // Moderate opacity range
           }}
           transition={{
             opacity: {
@@ -192,14 +194,14 @@ export function CurrencyBackground() {
         >
           <div className={`relative flex items-center justify-center ${particle.weight}`} 
                style={{ width: `${particle.size * 1.5}px`, height: `${particle.size * 1.5}px` }}>
-            {/* Minimalist grey/white gradient background */}
-            <div className="absolute inset-0 rounded-full bg-gradient-to-br from-gray-200 to-gray-400 dark:from-gray-600 dark:to-gray-800 opacity-60 shadow-sm"></div>
+            {/* Gradient background with moderate opacity */}
+            <div className={`absolute inset-0 rounded-full bg-gradient-to-br ${particle.color} opacity-75 shadow`}></div>
             
-            {/* Subtle inner glow */}
-            <div className="absolute inset-1 rounded-full bg-white dark:bg-gray-700 opacity-20"></div>
+            {/* Inner glow */}
+            <div className="absolute inset-1 rounded-full bg-white dark:bg-gray-900 opacity-25"></div>
             
-            {/* Currency symbol */}
-            <span className="relative z-10 text-gray-700 dark:text-gray-200 drop-shadow-sm">{particle.symbol}</span>
+            {/* Currency symbol with improved visibility */}
+            <span className="relative z-10 text-white drop-shadow-sm">{particle.symbol}</span>
           </div>
         </motion.div>
       ))}
