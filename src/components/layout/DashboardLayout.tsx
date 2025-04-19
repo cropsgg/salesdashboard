@@ -7,6 +7,7 @@ import { motion } from 'framer-motion';
 import { useHotkeys } from 'react-hotkeys-hook';
 import toast from 'react-hot-toast';
 
+
 interface DashboardLayoutProps {
   children: ReactNode;
 }

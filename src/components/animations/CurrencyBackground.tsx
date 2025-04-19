@@ -3,19 +3,19 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 
-// Currency symbols to display
+// Currency symbols to display with colors
 const CURRENCY_SYMBOLS = [
-  { symbol: '$', name: 'dollar' },
-  { symbol: '€', name: 'euro' },
-  { symbol: '¥', name: 'yen' },
-  { symbol: '£', name: 'pound' },
-  { symbol: '₹', name: 'rupee' },
-  { symbol: '₩', name: 'won' },
-  { symbol: '฿', name: 'baht' },
-  { symbol: '₽', name: 'ruble' },
-  { symbol: '₺', name: 'lira' },
-  { symbol: 'د.إ', name: 'dirham' },
-  { symbol: '₿', name: 'bitcoin' },
+  { symbol: '$', name: 'dollar', color: 'text-green-500 dark:text-green-400' },
+  { symbol: '€', name: 'euro', color: 'text-blue-500 dark:text-blue-400' },
+  { symbol: '¥', name: 'yen', color: 'text-red-500 dark:text-red-400' },
+  { symbol: '£', name: 'pound', color: 'text-purple-500 dark:text-purple-400' },
+  { symbol: '₹', name: 'rupee', color: 'text-orange-500 dark:text-orange-400' },
+  { symbol: '₩', name: 'won', color: 'text-teal-500 dark:text-teal-400' },
+  { symbol: '฿', name: 'baht', color: 'text-indigo-500 dark:text-indigo-400' },
+  { symbol: '₽', name: 'ruble', color: 'text-cyan-500 dark:text-cyan-400' },
+  { symbol: '₺', name: 'lira', color: 'text-amber-500 dark:text-amber-400' },
+  { symbol: 'د.إ', name: 'dirham', color: 'text-rose-500 dark:text-rose-400' },
+  { symbol: '₿', name: 'bitcoin', color: 'text-yellow-500 dark:text-yellow-400' },
 ];
 
 interface CurrencyParticle {
@@ -24,6 +24,7 @@ interface CurrencyParticle {
   y: number;
   symbol: string;
   name: string;
+  color: string;
   size: number;
   rotation: number;
   speed: number;
@@ -45,7 +46,7 @@ export function CurrencyBackground() {
     });
 
     // Create initial particles
-    const initialParticles: CurrencyParticle[] = Array.from({ length: 25 }, (_, i) => {
+    const initialParticles: CurrencyParticle[] = Array.from({ length: 35 }, (_, i) => {
       const randomCurrency = CURRENCY_SYMBOLS[Math.floor(Math.random() * CURRENCY_SYMBOLS.length)];
       return {
         id: i,
@@ -53,7 +54,8 @@ export function CurrencyBackground() {
         y: Math.random() * window.innerHeight,
         symbol: randomCurrency.symbol,
         name: randomCurrency.name,
-        size: Math.random() * 20 + 20, // Size between 20 and 40
+        color: randomCurrency.color,
+        size: Math.random() * 30 + 20, // Size between 20 and 50
         rotation: Math.random() * 360,
         speed: Math.random() * 0.5 + 0.1,
         direction: Math.random() * 360,
@@ -143,20 +145,21 @@ export function CurrencyBackground() {
       {particles.map((particle) => (
         <motion.div
           key={particle.id}
-          className="absolute text-gray-400 dark:text-gray-600 select-none"
+          className={`absolute ${particle.color} select-none`}
           style={{
             x: particle.x,
             y: particle.y,
             fontSize: `${particle.size}px`,
             rotate: particle.rotation,
-            opacity: 0.2,
+            opacity: 0.6,
             fontWeight: 'bold',
-            filter: 'blur(1px)',
+            filter: 'blur(0.5px)',
+            textShadow: '0 0 10px currentColor'
           }}
           initial={{ scale: 0 }}
           animate={{ 
             scale: 1,
-            opacity: [0.1, 0.3, 0.1],
+            opacity: [0.4, 0.8, 0.4],
           }}
           transition={{
             opacity: {
