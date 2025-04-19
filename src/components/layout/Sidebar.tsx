@@ -23,7 +23,7 @@ interface NavItem {
 }
 
 export function Sidebar() {
-  const [isCollapsed, setIsCollapsed] = useState(false);
+  const [isCollapsed, setIsCollapsed] = useState(true);
   const [isMobile, setIsMobile] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const pathname = usePathname();
@@ -32,9 +32,6 @@ export function Sidebar() {
   useEffect(() => {
     const checkIfMobile = () => {
       setIsMobile(window.innerWidth < 1024);
-      if (window.innerWidth < 1024) {
-        setIsCollapsed(true);
-      }
     };
 
     // Check on mount
@@ -63,14 +60,14 @@ export function Sidebar() {
 
   // Sidebar animation variants
   const sidebarVariants = {
-    expanded: { width: '240px' },
-    collapsed: { width: '72px' },
+    expanded: { width: '240px', transition: { duration: 0.3, ease: 'easeOut' } },
+    collapsed: { width: '72px', transition: { duration: 0.3, ease: 'easeOut' } },
   };
 
   // Mobile sidebar variants
   const mobileSidebarVariants = {
-    open: { x: 0, opacity: 1 },
-    closed: { x: '-100%', opacity: 0 },
+    open: { x: 0, opacity: 1, transition: { duration: 0.3, ease: 'easeOut' } },
+    closed: { x: '-100%', opacity: 0, transition: { duration: 0.3, ease: 'easeIn' } },
   };
 
   // Overlay variants (for mobile)
@@ -101,13 +98,16 @@ export function Sidebar() {
       >
         <Link href={item.href} passHref>
           <div
-            className={`flex items-center py-3 px-4 rounded-lg mb-1 cursor-pointer transition-colors duration-200 ${
+            className={`flex items-center ${isCollapsed ? 'justify-center' : 'justify-start'} py-3 ${isCollapsed ? 'px-2' : 'px-4'} rounded-lg mb-1 cursor-pointer transition-all duration-200 group ${
               isActive
                 ? 'bg-blue-50 dark:bg-gray-800 text-blue-700 dark:text-blue-400'
                 : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'
             }`}
+            title={isCollapsed ? item.label : ''}
           >
-            <div className="flex items-center justify-center w-6">{item.icon}</div>
+            <div className={`flex items-center justify-center ${isCollapsed ? 'w-8 h-8' : 'w-6'} ${isCollapsed && !isActive ? 'group-hover:text-blue-600 dark:group-hover:text-blue-400' : ''}`}>
+              {item.icon}
+            </div>
             
             <AnimatePresence>
               {!isCollapsed && (
@@ -125,7 +125,7 @@ export function Sidebar() {
             {isActive && (
               <motion.div
                 layoutId="activeNavIndicator"
-                className="absolute left-0 w-1 h-8 bg-blue-500 rounded-r-full"
+                className={`absolute left-0 w-1 h-8 bg-blue-500 rounded-r-full`}
               />
             )}
           </div>
@@ -134,21 +134,10 @@ export function Sidebar() {
     );
   };
 
-  // Mobile sidebar toggle button
-  const mobileToggleButton = (
-    <button
-      onClick={toggleSidebar}
-      className="lg:hidden fixed z-50 bottom-4 left-4 bg-blue-600 text-white p-3 rounded-full shadow-lg"
-      aria-label="Toggle Menu"
-    >
-      {isMobileOpen ? <FiChevronLeft size={20} /> : <FiChevronRight size={20} />}
-    </button>
-  );
-
   // Sidebar content
   const sidebarContent = (
     <>
-      <div className="flex items-center justify-between p-4 mb-6">
+      <div className={`flex items-center ${isCollapsed ? 'justify-center' : 'justify-between'} p-4 mb-6`}>
         <AnimatePresence>
           {!isCollapsed && (
             <motion.div
@@ -160,17 +149,26 @@ export function Sidebar() {
               <span className="text-xl font-bold text-blue-600 dark:text-blue-400">SalesBoard</span>
             </motion.div>
           )}
+          {isCollapsed && (
+            <motion.div
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              className="flex items-center justify-center w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900"
+            >
+              <span className="text-xl font-bold text-blue-600 dark:text-blue-400">S</span>
+            </motion.div>
+          )}
         </AnimatePresence>
         
-        {!isMobile && (
+        {!isMobile && !isCollapsed && (
           <motion.button
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.95 }}
             onClick={toggleSidebar}
             className="p-1 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400"
-            aria-label={isCollapsed ? 'Expand Sidebar' : 'Collapse Sidebar'}
+            aria-label="Collapse Sidebar"
           >
-            {isCollapsed ? <FiChevronRight size={16} /> : <FiChevronLeft size={16} />}
+            <FiChevronLeft size={16} />
           </motion.button>
         )}
       </div>
@@ -178,7 +176,7 @@ export function Sidebar() {
       <div className="px-3 mb-8">
         <div className="mb-2 px-4">
           <p className={`text-xs font-medium text-gray-400 uppercase ${isCollapsed ? 'text-center' : ''}`}>
-            {isCollapsed ? 'Menu' : 'Main Menu'}
+            {isCollapsed ? '' : 'Main Menu'}
           </p>
         </div>
         
@@ -190,7 +188,7 @@ export function Sidebar() {
       <div className="px-3 mt-auto">
         <div className="mb-2 px-4">
           <p className={`text-xs font-medium text-gray-400 uppercase ${isCollapsed ? 'text-center' : ''}`}>
-            {isCollapsed ? 'More' : 'Support & Settings'}
+            {isCollapsed ? '' : 'Support & Settings'}
           </p>
         </div>
         
@@ -209,9 +207,24 @@ export function Sidebar() {
         initial={false}
         animate={isCollapsed ? 'collapsed' : 'expanded'}
         transition={{ duration: 0.3, type: 'spring', stiffness: 200, damping: 25 }}
-        className="h-screen flex flex-col py-2 bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-800 sticky top-0 overflow-hidden"
+        className="h-screen flex flex-col py-2 bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-800 sticky top-0 overflow-hidden relative"
       >
         {sidebarContent}
+        
+        {/* Enhanced expand button when collapsed */}
+        {isCollapsed && (
+          <motion.button
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            whileHover={{ scale: 1.1, x: 5 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={toggleSidebar}
+            className="absolute right-0 top-1/2 -translate-y-1/2 bg-blue-500 hover:bg-blue-600 text-white p-2 rounded-l-md shadow-md"
+            aria-label="Expand Sidebar"
+          >
+            <FiChevronRight size={16} />
+          </motion.button>
+        )}
       </motion.aside>
     );
   }
@@ -219,7 +232,25 @@ export function Sidebar() {
   // For mobile view
   return (
     <>
-      {mobileToggleButton}
+      {/* Enhanced mobile toggle button */}
+      <motion.button
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.95 }}
+        onClick={toggleSidebar}
+        className="lg:hidden fixed z-50 bottom-4 left-4 bg-blue-600 text-white p-3 rounded-full shadow-lg flex items-center justify-center"
+        aria-label="Toggle Menu"
+      >
+        {isMobileOpen ? <FiChevronLeft size={20} /> : <FiChevronRight size={20} />}
+        {!isMobileOpen && (
+          <motion.span
+            initial={{ opacity: 0, width: 0 }}
+            animate={{ opacity: 1, width: 'auto' }}
+            className="ml-2 font-medium"
+          >
+            Menu
+          </motion.span>
+        )}
+      </motion.button>
       
       <AnimatePresence>
         {isMobileOpen && (
