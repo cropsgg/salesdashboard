@@ -1,7 +1,5 @@
 # Sales Dashboard - Premium UI/UX Experience
 
-A modern, feature-rich sales dashboard built with Next.js and Tailwind CSS. This dashboard showcases cutting-edge UI/UX techniques for a seamless user experience.
-
 ## Features
 
 - **Interactive Dashboard**: Real-time data visualization with animated charts and metrics
