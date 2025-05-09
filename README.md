@@ -10,7 +10,7 @@
 - **Interactive Charts**: Customizable charts with hover tooltips and drill-down functionality
 - **Advanced Data Filtering**: Filter data by date range, categories, and search terms
 - **Accessible UI**: WCAG compliant design with proper ARIA attributes
-- **PWA Support**: Progressive Web App features for offline capabilities
+- **PWA Support**: Progressive Web App features for offline capabilities.
 
 ## Getting Started
 
